@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Composicao.Entities
 {
     class HourContract
@@ -11,10 +8,6 @@ namespace Composicao.Entities
 
         public int Hours { get; set; }
 
-        public HourContract(HourContract)
-        {
-
-        }
         public HourContract(int hoursJob)
         {
             Hours = hoursJob;
@@ -31,12 +24,12 @@ namespace Composicao.Entities
             return Hours * ValuePerHour;
         }
 
-        public override string ToString()
+        /*public override string ToString()
         {
             return "Income For "
                 + Date
                 + TotalValue();
 
-        }
+        }*/
     }
 }

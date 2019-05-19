@@ -1,8 +1,6 @@
 ﻿using Composicao.Entities.Enum;
 using System;
 using System.Collections.Generic;
-using System.Text;
-
 namespace Composicao.Entities
 {
     class Worker
@@ -11,35 +9,52 @@ namespace Composicao.Entities
         public double BaseSalary { get; set; }
 
         public WorkerLevel Level { get; set; }
+        public Department Department { get; set; }
+        public List<HourContract> Contracts { get; set; } = new List<HourContract>();
 
-        public Worker (string funcName)
+        public Worker(string funcName)
         {
             Name = funcName;
         }
-        public Worker (string funcName, double baseSalary) : this (funcName)
+        public Worker(string funcName, double baseSalary) : this(funcName)
         {
             Name = funcName;
             BaseSalary = baseSalary;
         }
 
-        public Worker (string funcName, double baseSalary, WorkerLevel cargo) : this (funcName, baseSalary)
+        public Worker(string funcName, double baseSalary, WorkerLevel cargo) : this(funcName, baseSalary)
         {
             Level = cargo;
         }
 
-        public void AddContract (DateTime date, double valuePerHour, int hours)
+        public Worker(string funcName, double baseSalary, WorkerLevel cargo, Department department) : this(funcName, baseSalary, cargo)
         {
-            HourContract contract = new HourContract(date, valuePerHour, hours);
+            Department = department;
         }
 
-        public void RemoveContract (HourContract contract)
+        public void AddContract(HourContract contract)
         {
-            
+            Contracts.Add(contract);
         }
 
-        public double Income (int year, int month)
+        public void RemoveContract(HourContract contract)
         {
-            return BaseSalary;
+            Contracts.Remove(contract);
+        }
+
+        public double Income(int year, int month)
+        {
+            double sum = BaseSalary;
+
+            foreach (HourContract contract in Contracts)
+            {
+                if (year == contract.Date.Month && month == contract.Date.Month)
+                {
+                    sum += contract.TotalValue();
+                }
+            }
+            return sum;
+
         }
 
 
