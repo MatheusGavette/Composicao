@@ -48,7 +48,7 @@ namespace Composicao.Entities
 
             foreach (HourContract contract in Contracts)
             {
-                if (year == contract.Date.Month && month == contract.Date.Month)
+                if (year == contract.Date.Year && month == contract.Date.Month)
                 {
                     sum += contract.TotalValue();
                 }
@@ -56,7 +56,6 @@ namespace Composicao.Entities
             return sum;
 
         }
-
 
     }
 }

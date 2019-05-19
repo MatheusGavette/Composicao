@@ -10,24 +10,23 @@ namespace Composicao
     {
         static void Main(string[] args)
         {
-            string nomeFuncionario;
-            double salarioBase;
-
-            Console.WriteLine("Insira o nome do Departemento:");
-            Department name = new Department { Name = Console.ReadLine() };
+            Console.Write("Insira o nome do Departemento:");
+            string deptName = Console.ReadLine();
 
             Console.WriteLine("Insira as informações do trabalhador:");
 
             Console.Write("Nome: ");
-            nomeFuncionario = Console.ReadLine();
+            string nomeFuncionario = Console.ReadLine();
 
             Console.Write("Salário Base: ");
-            salarioBase = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            double salarioBase = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            Console.WriteLine("Cargo: 1 - Junior | 2 - Pleno | 3 - Senior");
+            Console.WriteLine("Cargo: 1 - Junior | 2 - MidLevel | 3 - Senior");
             WorkerLevel cargo = Enum.Parse<WorkerLevel>(Console.ReadLine());
 
-            Worker func = new Worker(nomeFuncionario, salarioBase, cargo);
+            Department dept = new Department(deptName);
+
+            Worker worker = new Worker(nomeFuncionario, salarioBase, cargo, dept);
 
             Console.WriteLine("-------------");
 
@@ -36,20 +35,34 @@ namespace Composicao
 
             for (int i = 0; i < numberContracts; i++)
             {
-                Console.Write("Informe a data: ");
+                Console.Write($"Informe a data do contrato {i}: ");
                 DateTime date = DateTime.Parse(Console.ReadLine());
 
-                Console.Write("Informe o valor hora: ");
+                Console.Write($"Informe o valor hora do contrato {i}: ");
                 double valorHora = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-                Console.Write("Horas trabalhadas: ");
+                Console.Write($"Horas trabalhadas dentro do contrato {i}: ");
                 int horaTrabalhada = int.Parse(Console.ReadLine());
+
+                HourContract contract = new HourContract(date, valorHora, horaTrabalhada);
+
+                worker.AddContract(contract);
+
+                Console.WriteLine("-----------------");
                 
             }
 
-            Console.Write("Entre com o mês de cálculo de salário: ");
-            DateTime mes = DateTime.Parse(Console.ReadLine());
+            Console.Write("Entre com o mês e ano (MM/YYYY) desejado para o cálculo de salário: ");
+            string monthAndYear = Console.ReadLine();
+            int month = int.Parse(monthAndYear.Substring(0, 2));
+            int year = int.Parse(monthAndYear.Substring(3));
 
+            Console.WriteLine("Nome: {0}", worker.Name);
+            Console.WriteLine("Departamento: {0}", worker.Department.Name);
+            Console.WriteLine("Cargo: {0}", worker.Level);
+            Console.WriteLine("Salário do mês solicitado: {0}", worker.Income(year, month).ToString("F2", CultureInfo.InvariantCulture));
+
+            Console.ReadLine();
 
         }
     }

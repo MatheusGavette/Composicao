@@ -24,12 +24,5 @@ namespace Composicao.Entities
             return Hours * ValuePerHour;
         }
 
-        /*public override string ToString()
-        {
-            return "Income For "
-                + Date
-                + TotalValue();
-
-        }*/
     }
 }
