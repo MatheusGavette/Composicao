@@ -6,7 +6,7 @@ namespace Composicao.Entities.Enum
 {
     enum WorkerLevel : int
     {
-        JUNIOR,
+        JUNIOR = 1,
         MID_LEVEL,
         SENIOR
     }
